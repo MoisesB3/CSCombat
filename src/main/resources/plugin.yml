@@ -1,0 +1,42 @@
+# CSCombat - plugin.yml (${project.version} is filled in by Maven)
+name: CSCombat
+version: ${project.version}
+main: us.copestudios.cscombat.CSCombat
+# 1.20 = loads on every server from 1.20.1 up to the newest 1.21.x.
+api-version: '1.20'
+author: Cope Studios
+description: Combat tagging, combat-log punishment, new player protection and scheduled PvP.
+depend: [CopeCore]
+softdepend: [WorldGuard, GriefPrevention, ProtectionStones, Citizens]
+
+commands:
+  cscombat:
+    description: CSCombat command (status, protection, toggle, time, list, untag, protect, reload)
+    usage: /cscombat help
+    aliases: [combat, cb]
+  csreload:
+    description: Reload CSCombat
+    usage: /csreload
+
+permissions:
+  cscombat.admin:
+    description: /cscombat time, list, untag, protect (and everything below)
+    default: op
+    children:
+      cscombat.reload: true
+      cscombat.toggle: true
+  cscombat.reload:
+    description: /csreload and /cscombat reload
+    default: op
+  cscombat.toggle:
+    description: /cscombat toggle (global combat on/off)
+    default: op
+  cscombat.bypass:
+    description: Use blocked commands while in combat (if combat.bypass-with-permission is true)
+    default: op
+  cscombat.bypass.logout:
+    description: Logging out in combat does not kill this player
+    default: false
+  cscombat.newplayer.bypass:
+    description: Never get new player protection
+    default: op

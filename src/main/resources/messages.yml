@@ -1,0 +1,91 @@
+# =============================================================================
+#  CSCombat - messages.yml   (/csreload after editing)
+#  MiniMessage (<red>, <#FF5555>) or old codes (&c, &#FF5555) both work.
+#  Placeholders: <time>, {time} or %time% - all work. "" hides a message.
+# =============================================================================
+
+prefix: "<#FF5555>[CSCombat]</#FF5555> <white>"
+
+generic:
+  help-header: "<#FF5555>========== CSCombat Help =========="
+  help-line: "<#FFAA00>/<command> <usage></#FFAA00> <white>- <description>"
+  help-footer: "<#FF5555>=================================="
+
+help:
+  status: "check your combat status"
+  protection: "your new player protection ([end] to end it)"
+  toggle: "turn global combat on/off"
+  time: "view the global combat schedule"
+  list: "players in combat right now"
+  untag: "end a player's combat tag"
+  protect: "give or remove new player protection"
+  reload: "reload config.yml and messages.yml"
+
+# ---- Combat tag -------------------------------------------------------------
+# <time> = tag seconds
+enter-combat: "<#FF5555>⚔ You are now in combat for <time> seconds!"
+exit-combat: "<#55FF55>✓ You are no longer in combat."
+# <time> <opponent>
+actionbar: "<#FF5555>⚔ Combat: <time>s"
+# <time> <command>
+command-blocked: "<#FF5555>You cannot use commands while in combat! (<time>s remaining)"
+# <player> = who logged out, <opponent> = who they were fighting
+combat-logout-death: "<#FF5555><player> logged out during combat and died!"
+
+# ---- New player protection --------------------------------------------------
+# <time>
+new-player-protected: "<#55FF55>You have <time> seconds of new player protection!"
+protection-expired: "<#FFAA00>Your new player protection has expired."
+# Shown to someone hitting a protected player. <time> <player>
+protected-target: "<#FF5555>You cannot attack this player! They have new player protection for <time> more seconds."
+# Shown to a protected player who tries to attack. <time>
+attacker-protected: "<#FF5555>You can't attack while you have new player protection (<time>s left). <gray>/cscombat protection end</gray> ends it."
+protection-none: "<#55FF55>You don't have new player protection."
+protection-ended: "<#FFAA00>You ended your new player protection. You can fight now."
+protection-end-hint: "<gray>Type <white>/cscombat protection end</white> to end it early."
+
+# ---- Global combat ----------------------------------------------------------
+global-combat-enabled: "<#55FF55>⚔ Global combat has been enabled!"
+global-combat-disabled: "<#FF5555>⚔ Global combat has been disabled!"
+global-combat-inactive: "<#FFAA00>Combat is currently disabled on this server."
+global-off-in-config: "<red>Global combat is turned off in config.yml (global-combat.enabled)."
+global-not-manual: "<red>Global combat is in schedule mode. Set global-combat.mode to 'manual' to toggle it."
+# <mode>
+time-mode: "<white>Global Combat Mode: <#FFAA00><mode>"
+# <state>
+time-manual: "<white>Manual State: <state>"
+time-schedule-header: "<white>Scheduled Times:"
+# <range>
+time-schedule-line: "<#FFAA00>  - <range>"
+# <state>
+time-current: "<white>Current Status: <state>"
+
+# ---- /cscombat status -------------------------------------------------------
+# <status>
+combat-status: "<#FFAA00>Combat Status: <status>"
+status-in-combat: "<#FF5555>In Combat"
+# <time> <opponent>
+time-remaining: "<#FFAA00>Time Remaining: <time> seconds"
+not-in-combat: "<#55FF55>You are not in combat."
+# <time>
+status-protection: "<#55FF55>New Player Protection: <#FFAA00><time>s"
+# <state>
+status-global: "<white>Global Combat: <state>"
+word-enabled: "<#55FF55>Enabled"
+word-disabled: "<#FF5555>Disabled"
+
+# ---- Admin ------------------------------------------------------------------
+# <count>
+list-header: "<#FFAA00><count> player(s) in combat:"
+# <player> <time> <opponent>
+list-line: "<gray> - <white><player></white> <#FFAA00><time>s</#FFAA00> <gray>vs <white><opponent>"
+list-empty: "<#55FF55>Nobody is in combat."
+# <player>
+not-tagged: "<red><player> is not in combat."
+untagged: "<#55FF55><player> is no longer in combat."
+# <player> <time>
+protection-given: "<#55FF55>Gave <player> <time> seconds of new player protection."
+protection-removed: "<#FFAA00>Removed <player>'s new player protection."
+# <ms>
+reload-success: "<#55FF55>Configuration reloaded successfully!"
+reload-error: "<#FF5555>Error reloading configuration. Check console for details."

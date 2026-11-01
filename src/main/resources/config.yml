@@ -1,0 +1,164 @@
+# =============================================================================
+#  CSCombat - config.yml   (/csreload after editing)
+#  Your 1.0.2 settings keep working. Texts (and the prefix) are in
+#  messages.yml now - yours were moved there automatically.
+# =============================================================================
+
+# ----------------------------------------------------------------------------
+#  Combat tag
+# ----------------------------------------------------------------------------
+combat:
+  # Seconds a player stays in combat after a hit (every hit restarts it).
+  tag-duration: 15
+
+  # Which hits tag. player-damage: true = every hit from a player counts
+  # (then the two below don't matter). Turn it off to choose per type.
+  tag-actions:
+    player-hit: true        # melee
+    player-damage: true     # any hit from a player
+    projectile-hit: true    # arrows, tridents, snowballs...
+
+  # Hitting yourself (own arrow, ender pearl) doesn't tag.
+  prevent-self-tag: true
+
+  # Kept from 1.0.2 (mobs never tag).
+  mob-tagging: false
+
+  # Commands blocked while tagged. "*" = all commands.
+  # /essentials:home and similar namespaced forms are caught too.
+  blocked-commands:
+    - /spawn
+    - /home
+    - /tp
+    - /tpa
+    - /warp
+    - /back
+
+  # Always allowed while tagged (wins over blocked-commands).
+  # /cscombat is always allowed.
+  allowed-commands:
+    - /msg
+    - /r
+    - /reply
+    - /help
+
+  # Players with cscombat.bypass can use every command in combat.
+  bypass-with-permission: true
+
+  # NEW: dying ends your combat tag (1.0.2 kept you tagged after respawning).
+  untag-on-death: true
+
+  # NEW: worlds where CSCombat does nothing (no tags, no protection checks).
+  disabled-worlds: []
+
+  # NEW: CopeCore states that make CSCombat ignore a player. "in-duel" =
+  # CSSPVP/CSCommands duels already handle leaving mid-fight.
+  ignore-states:
+    - in-duel
+
+# ----------------------------------------------------------------------------
+#  New player protection (first join)
+# ----------------------------------------------------------------------------
+new-player-protection:
+  enabled: true
+  # Seconds of protection (0 = off).
+  protection-time: 300
+  # NEW: false = only time spent online counts (relogging keeps the rest).
+  #      true  = the time runs out even while offline.
+  count-offline-time: false
+  # NEW: true = a protected player who attacks someone loses the protection
+  #      (and the hit goes through). false = they just can't attack (1.0.2).
+  end-on-attack: false
+
+# ----------------------------------------------------------------------------
+#  Global combat: PvP on the whole server only at set times / when toggled
+# ----------------------------------------------------------------------------
+global-combat:
+  # false = PvP is always on (normal).
+  enabled: false
+  # 'schedule' = use time-ranges below, 'manual' = /cscombat toggle.
+  mode: 'manual'
+  # 24-hour HH:mm-HH:mm. Ranges may cross midnight (22:00-02:00).
+  time-ranges:
+    - '18:00-23:00'
+    - '12:00-14:00'
+  # NEW: time zone for the schedule, e.g. America/New_York ('' = server time).
+  timezone: ''
+  # NEW: tell everyone when the schedule turns PvP on/off.
+  announce-schedule: true
+  # Manual mode on/off (changed by /cscombat toggle).
+  manual-state: true
+
+# ----------------------------------------------------------------------------
+#  Action bar timer (text: "actionbar" in messages.yml)
+# ----------------------------------------------------------------------------
+actionbar:
+  enabled: true
+  # Ticks between updates (20 = 1 second).
+  update-interval: 20
+
+# ----------------------------------------------------------------------------
+#  Sounds. Old names (ENTITY_PLAYER_HURT) and new ones (entity.player.hurt)
+#  both work. '' = no sound.
+# ----------------------------------------------------------------------------
+sounds:
+  enabled: true
+  enter-combat: 'ENTITY_PLAYER_HURT'
+  exit-combat: 'ENTITY_PLAYER_LEVELUP'
+  volume: 0.5
+  pitch: 1.0
+
+# ----------------------------------------------------------------------------
+#  Combat logging (leaving while tagged = death)
+# ----------------------------------------------------------------------------
+death:
+  # Drop items / experience (also when the keepInventory gamerule is on).
+  drop-items: true
+  drop-exp: true
+  # Lightning effect where they logged out (harmless).
+  lightning-effect: true
+  # Tell everyone (text: combat-logout-death in messages.yml).
+  broadcast-death: true
+  # NEW: also kill players who were KICKED while tagged (by staff, AFK, anticheat).
+  punish-kicked: false
+
+# ----------------------------------------------------------------------------
+#  Other plugins (each only used when installed)
+# ----------------------------------------------------------------------------
+integrations:
+  worldguard:
+    enabled: true
+    # Block hits where WorldGuard's pvp flag is deny.
+    respect-pvp-flag: true
+    # Custom region flags (now really registered - see the README):
+    #   /rg flag <region> prevent-combat allow   -> no PvP there
+    #   /rg flag <region> allow-combat deny      -> no PvP there
+    #   /rg flag <region> allow-combat allow     -> skip the pvp flag check there
+    custom-flags:
+      allow-combat: true
+      prevent-combat: true
+
+  griefprevention:
+    enabled: true
+    # No PvP inside any claim.
+    prevent-in-claims: true
+    # No PvP when the attacker or victim owns the claim (if the above is false).
+    prevent-for-claim-owners: false
+
+  protectionstones:
+    enabled: true
+    # No PvP inside ProtectionStones regions (only those, not every WorldGuard region).
+    prevent-in-regions: true
+
+  citizens:
+    enabled: true
+    # NPCs never get tagged or tag anyone (they can still be hit).
+    prevent-npc-tag: true
+
+# ----------------------------------------------------------------------------
+#  Debug
+# ----------------------------------------------------------------------------
+debug:
+  enabled: false
+  # Write combat starts/ends to the console.
+  log-combat-events: false

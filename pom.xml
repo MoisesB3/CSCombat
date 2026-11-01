@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    ============================================================================
+     CSCombat (combat tag / combat log) - pom.xml
+    ============================================================================
+     Build:   mvn clean package        ->  target/CSCombat-<version>.jar
+
+     IMPORTANT: build and INSTALL CopeCore first (mvn clean install in the
+     CopeCore folder), and keep copecore.version below equal to CopeCore's
+     own version.
+
+     Compiled against the OLDEST supported API (Spigot 1.20.1) with Java 17
+     bytecode, so the jar loads on every server from 1.20.1 up (Java 17 or 21).
+     (Was Spigot 1.21.4 + Java 21 + an unneeded shade step.)
+    ============================================================================
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>us.copestudios</groupId>
+    <artifactId>cscombat</artifactId>
+    <version>2.0.0</version>
+    <packaging>jar</packaging>
+    <name>CSCombat</name>
+    <description>Combat tagging, combat-log punishment, new player protection and scheduled PvP.</description>
+
+    <properties>
+        <java.version>17</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spigot.version>1.20.1-R0.1-SNAPSHOT</spigot.version>
+        <!-- Must match the version in CopeCore's own pom.xml (and be installed with mvn install). -->
+        <copecore.version>1.1.83</copecore.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>spigotmc-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+        <!-- WorldGuard / WorldEdit -->
+        <repository>
+            <id>sk89q-repo</id>
+            <url>https://maven.enginehub.org/repo/</url>
+        </repository>
+        <!-- GriefPrevention -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <!-- The server API. "provided" = the server has it, it is NOT put in our jar. -->
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>${spigot.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- CopeCore: its own plugin jar on the server (plugin.yml: depend: [CopeCore]). -->
+        <dependency>
+            <groupId>us.copestudios</groupId>
+            <artifactId>copecore</artifactId>
+            <version>${copecore.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- WorldGuard: OPTIONAL on the server. Only hook/WorldGuardHook touches it. -->
+        <dependency>
+            <groupId>com.sk89q.worldguard</groupId>
+            <artifactId>worldguard-bukkit</artifactId>
+            <version>7.0.9</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- GriefPrevention: OPTIONAL on the server. Only hook/GriefPreventionHook touches it. -->
+        <dependency>
+            <groupId>com.github.TechFortress</groupId>
+            <artifactId>GriefPrevention</artifactId>
+            <version>16.18</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>CSCombat-${project.version}</finalName>
+        <resources>
+            <!-- Only plugin.yml is filtered (so ${project.version} is filled in). -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>plugin.yml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>plugin.yml</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <release>${java.version}</release>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
